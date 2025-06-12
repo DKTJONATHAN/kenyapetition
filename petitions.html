@@ -40,7 +40,7 @@
     <div id="petitionModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
         <div class="bg-offwhite p-6 rounded-lg w-full max-w-md">
             <h3 class="text-xl font-bold text-charcoal mb-4">Sign Petition: Dismissal of DIG Eliud Lagat</h3>
-            <form id="signatureForm" onsubmit="submitToGoogleForm(event)">
+            <form id="signatureForm" onsubmit="submitToGoogleSheet(event)">
                 <!-- Legal Notice -->
                 <div class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400">
                     <p class="text-sm text-yellow-700">
@@ -51,17 +51,6 @@
                 <div class="mb-4">
                     <label for="fullName" class="block text-slate">Full Name (as appears in ID)</label>
                     <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 border rounded" required>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="idNumber" class="block text-slate">National ID/Passport Number</label>
-                    <input type="text" id="idNumber" name="idNumber" class="w-full px-3 py-2 border rounded" required>
-                    <p class="text-xs text-gray-500 mt-1">For verification purposes only. Will not be publicly displayed.</p>
-                </div>
-                
-                <div class="mb-4">
-                    <label for="email" class="block text-slate">Email Address</label>
-                    <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" required>
                 </div>
                 
                 <div class="mb-4">
@@ -226,8 +215,6 @@
         const formData = new FormData(form);
         const data = {
             fullName: formData.get('fullName'),
-            idNumber: formData.get('idNumber'),
-            email: formData.get('email'),
             phone: formData.get('phone'),
             county: formData.get('county'),
             constituency: formData.get('constituency'),
