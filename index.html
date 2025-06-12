@@ -27,106 +27,115 @@
     <style>
       @layer components {
         .btn {
-          @apply px-4 py-2 rounded-md transition-colors duration-200;
+          @apply px-6 py-3 rounded-lg transition-all duration-300 font-medium;
         }
         .btn-primary {
-          @apply bg-emerald text-white hover:bg-emerald-hover;
+          @apply bg-emerald text-white hover:bg-emerald-hover hover:shadow-lg;
         }
-        .btn-outline {
-          @apply border border-emerald text-emerald hover:bg-emerald hover:text-white;
+        .section-title {
+          @apply text-3xl md:text-4xl font-bold text-center mb-12 text-charcoal font-serif;
         }
-        .petition-card {
-          @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200;
+        .feature-card {
+          @apply bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 h-full;
         }
         .nav-link {
-          @apply text-charcoal hover:text-emerald transition-colors duration-200;
+          @apply hover:text-emerald transition-colors duration-300;
         }
-        .form-input {
-          @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-emerald focus:ring-1 focus:ring-emerald;
-        }
+      }
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+      h1, h2, h3, .font-serif {
+        font-family: 'Playfair Display', serif;
       }
     </style>
 </head>
 <body class="bg-pearl flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="bg-charcoal text-white p-4 shadow-md">
-        <div class="container mx-auto flex items-center">
-            <img src="assets/logo.png" alt="Kenya Coat of Arms" class="h-10 mr-3">
-            <h1 class="text-xl font-bold">Kenya Petitions</h1>
+    <header class="bg-charcoal text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="assets/logo.png" alt="Kenya Coat of Arms" class="h-10 mr-3">
+                <h1 class="text-xl font-bold">Kenya Petitions</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="nav-link text-emerald">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="petitions.html" class="nav-link">Petitions</a>
+                <a href="privacy.html" class="nav-link">Privacy</a>
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Section - Platform Mission -->
-    <section class="bg-pearl py-16 px-4 text-center">
-        <div class="container mx-auto max-w-4xl">
-            <h1 class="text-4xl font-bold text-charcoal mb-6">A Platform for Change</h1>
-            <p class="text-xl mb-8 text-slate">Where every Kenyan can amplify their voice and drive meaningful action</p>
-            <a href="petitions.html" class="btn-primary font-bold py-3 px-8 rounded-full inline-block">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald to-emerald-hover text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">A Platform for Change</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">
+                Where every Kenyan can amplify their voice and drive meaningful action
+            </p>
+            <a href="petitions.html" class="btn btn-primary mt-8 inline-block">
                 <i class="fas fa-file-signature mr-2"></i> View Active Petitions
             </a>
         </div>
     </section>
 
     <!-- Future Goals Stats -->
-    <section class="py-12 bg-white">
+    <section class="py-16 bg-offwhite">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 text-charcoal">Our Vision for Kenya</h2>
-            <div class="grid md:grid-cols-4 gap-6 text-center">
-                <div class="bg-blue-50 p-6 rounded-lg">
-                    <div class="text-4xl font-bold text-blue-700 mb-2">500K+</div>
-                    <p class="text-gray-700">Active users engaging with petitions annually by 2026</p>
+            <h2 class="section-title">Our Vision for Kenya</h2>
+            <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="feature-card text-center">
+                    <div class="text-4xl font-bold text-emerald mb-2">500K+</div>
+                    <p class="text-slate">Active users engaging with petitions annually by 2026</p>
                 </div>
-                <div class="bg-green-50 p-6 rounded-lg">
-                    <div class="text-4xl font-bold text-green-700 mb-2">80%</div>
-                    <p class="text-gray-700">Target response rate for petitions reaching signature thresholds</p>
+                <div class="feature-card text-center">
+                    <div class="text-4xl font-bold text-emerald mb-2">80%</div>
+                    <p class="text-slate">Target response rate for petitions reaching signature thresholds</p>
                 </div>
-                <div class="bg-yellow-50 p-6 rounded-lg">
-                    <div class="text-4xl font-bold text-yellow-700 mb-2">47</div>
-                    <p class="text-gray-700">Counties with active petition campaigns by 2025</p>
+                <div class="feature-card text-center">
+                    <div class="text-4xl font-bold text-emerald mb-2">47</div>
+                    <p class="text-slate">Counties with active petition campaigns by 2025</p>
                 </div>
-                <div class="bg-red-50 p-6 rounded-lg">
-                    <div class="text-4xl font-bold text-red-700 mb-2">24h</div>
-                    <p class="text-gray-700">Target response time for urgent community petitions</p>
+                <div class="feature-card text-center">
+                    <div class="text-4xl font-bold text-emerald mb-2">24h</div>
+                    <p class="text-slate">Target response time for urgent community petitions</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- How It Works - Future Focused -->
-    <section class="py-12 bg-offwhite">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center mb-12 text-charcoal">How This Platform Creates Impact</h2>
+    <!-- How It Works -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">How This Platform Creates Impact</h2>
             
-            <div class="mb-10">
-                <h3 class="text-2xl font-semibold text-charcoal mb-4 flex items-center">
-                    <span class="bg-blue-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">1</span>
-                    Empowering Citizen Participation
-                </h3>
-                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-blue-600">
-                    <p class="text-slate mb-4">
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="feature-card">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-emerald text-white rounded-full h-10 w-10 flex items-center justify-center mr-4 text-xl font-bold">1</div>
+                        <h3 class="text-2xl font-bold text-charcoal">Empowering Citizen Participation</h3>
+                    </div>
+                    <p class="text-slate">
                         We provide tools to transform individual concerns into collective action, ensuring every Kenyan can participate in shaping our nation's future.
                     </p>
                 </div>
-            </div>
 
-            <div class="mb-10">
-                <h3 class="text-2xl font-semibold text-charcoal mb-4 flex items-center">
-                    <span class="bg-green-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">2</span>
-                    Bridging People and Government
-                </h3>
-                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-green-600">
-                    <p class="text-slate mb-4">
+                <div class="feature-card">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-emerald text-white rounded-full h-10 w-10 flex items-center justify-center mr-4 text-xl font-bold">2</div>
+                        <h3 class="text-2xl font-bold text-charcoal">Bridging People and Government</h3>
+                    </div>
+                    <p class="text-slate">
                         Our platform serves as a direct channel between citizens and decision-makers, making governance more responsive and inclusive.
                     </p>
                 </div>
-            </div>
 
-            <div class="mb-10">
-                <h3 class="text-2xl font-semibold text-charcoal mb-4 flex items-center">
-                    <span class="bg-purple-600 text-white rounded-full h-8 w-8 flex items-center justify-center mr-3">3</span>
-                    Building a Culture of Accountability
-                </h3>
-                <div class="bg-white p-6 rounded-lg shadow-sm border-l-4 border-purple-600">
+                <div class="feature-card">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-emerald text-white rounded-full h-10 w-10 flex items-center justify-center mr-4 text-xl font-bold">3</div>
+                        <h3 class="text-2xl font-bold text-charcoal">Building a Culture of Accountability</h3>
+                    </div>
                     <p class="text-slate">
                         Through transparent petition processes, we're working to strengthen democratic engagement and institutional accountability across Kenya.
                     </p>
@@ -135,24 +144,24 @@
         </div>
     </section>
 
-    <!-- Testimonials (Image-less) -->
-    <section class="py-12 bg-charcoal text-white">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold text-center mb-12">Why Kenyans Believe in This Platform</h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-700 p-6 rounded-lg">
+    <!-- Testimonials -->
+    <section class="py-16 bg-charcoal text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-white">Why Kenyans Believe in This Platform</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-gray-700 p-8 rounded-xl">
                     <div class="mb-4">
-                        <h4 class="font-bold">Community Organizer, Nairobi</h4>
+                        <h4 class="font-bold text-lg">Community Organizer, Nairobi</h4>
                     </div>
-                    <p class="italic mb-4">
+                    <p class="italic text-gray-200">
                         "This platform gives us hope that ordinary citizens can influence the decisions that affect our daily lives."
                     </p>
                 </div>
-                <div class="bg-gray-700 p-6 rounded-lg">
+                <div class="bg-gray-700 p-8 rounded-xl">
                     <div class="mb-4">
-                        <h4 class="font-bold">Youth Leader, Mombasa</h4>
+                        <h4 class="font-bold text-lg">Youth Leader, Mombasa</h4>
                     </div>
-                    <p class="italic mb-4">
+                    <p class="italic text-gray-200">
                         "Finally, a tool that helps us organize and demand change without bureaucratic barriers."
                     </p>
                 </div>
@@ -160,57 +169,99 @@
         </div>
     </section>
 
-    <!-- CTA Section - Future Focused -->
+    <!-- CTA Section -->
     <section class="py-16 bg-emerald text-white text-center">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <h2 class="text-3xl font-bold mb-6">Ready to Shape Kenya's Future?</h2>
-            <p class="text-xl mb-8">Be part of the movement making citizen engagement more powerful than ever before.</p>
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-white">Ready to Shape Kenya's Future?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Be part of the movement making citizen engagement more powerful than ever before.</p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="petitions.html" class="bg-white hover:bg-gray-100 text-emerald font-bold py-3 px-8 rounded-full inline-block transition duration-300">
+                <a href="petitions.html" class="btn bg-white text-emerald hover:bg-gray-100 hover:shadow-lg">
                     Start a Petition
                 </a>
-                <a href="about.html" class="border-2 border-white hover:bg-white hover:text-emerald font-bold py-3 px-8 rounded-full inline-block transition duration-300">
+                <a href="about.html" class="btn border-2 border-white text-white hover:bg-white hover:text-emerald">
                     Learn How It Works
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- Final Call to Action -->
-    <section class="py-12 bg-charcoal text-white text-center">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <h2 class="text-3xl font-bold mb-6">Your Voice Will Make The Difference</h2>
-            <p class="text-xl mb-8">Join thousands of Kenyans who are already building a more responsive democracy.</p>
-            <a href="petitions.html" class="btn-primary font-bold py-3 px-8 rounded-full inline-block">
+    <!-- Final CTA -->
+    <section class="py-16 bg-gradient-to-r from-emerald to-emerald-hover text-white text-center">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Your Voice Will Make The Difference</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Join thousands of Kenyans who are already building a more responsive democracy.</p>
+            <a href="petitions.html" class="btn btn-primary">
                 Take Action Now <i class="fas fa-arrow-right ml-2"></i>
             </a>
         </div>
     </section>
 
-11<nav class="md:hidden bg-charcoal text-white p-4 fixed bottom-0 w-full z-10">
-    <div class="container mx-auto flex justify-around items-center">
-        <a href="index.html" class="flex flex-col items-center text-emerald">
-            <i class="fas fa-house text-2xl"></i>
-            <span class="text-sm">Home</span>
-        </a>
-        <a href="about.html" class="flex flex-col items-center">
-            <i class="fas fa-info-circle text-2xl"></i>
-            <span class="text-sm">About</span>
-        </a>
-        <a href="petitions.html" class="flex flex-col items-center">
-            <i class="fas fa-file-signature text-2xl"></i>
-            <span class="text-sm">Petitions</span>
-        </a>
-        <a href="privacy.html" class="flex flex-col items-center">
-            <i class="fas fa-shield-alt text-2xl"></i>
-            <span class="text-sm">Privacy</span>
-        </a>
-    </div>
-</nav>
+    <!-- Bottom Navigation Bar (Mobile) -->
+    <nav class="md:hidden bg-charcoal text-white p-4 fixed bottom-0 w-full z-10">
+        <div class="container mx-auto flex justify-around items-center">
+            <a href="index.html" class="flex flex-col items-center text-emerald">
+                <i class="fas fa-house text-2xl"></i>
+                <span class="text-sm">Home</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center">
+                <i class="fas fa-info-circle text-2xl"></i>
+                <span class="text-sm">About</span>
+            </a>
+            <a href="petitions.html" class="flex flex-col items-center">
+                <i class="fas fa-file-signature text-2xl"></i>
+                <span class="text-sm">Petitions</span>
+            </a>
+            <a href="privacy.html" class="flex flex-col items-center">
+                <i class="fas fa-shield-alt text-2xl"></i>
+                <span class="text-sm">Privacy</span>
+            </a>
+        </div>
+    </nav>
+
     <!-- Footer -->
-    <footer class="bg-charcoal text-white text-center p-4 mt-4">
-        <p>© 2025 Kenya Petitions. All rights reserved.</p>
-        <p class="text-sm mt-2">Verified by the Office of the Data Protection Commissioner</p>
+    <footer class="bg-charcoal text-white py-8 mt-4">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kenya Petitions</h3>
+                    <p class="text-slate">
+                        Empowering citizens to drive change through collective action and democratic participation.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-slate hover:text-emerald">Home</a></li>
+                        <li><a href="about.html" class="text-slate hover:text-emerald">About Us</a></li>
+                        <li><a href="petitions.html" class="text-slate hover:text-emerald">Current Petitions</a></li>
+                        <li><a href="privacy.html" class="text-slate hover:text-emerald">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate hover:text-emerald">Terms of Service</a></li>
+                        <li><a href="#" class="text-slate hover:text-emerald">Cookie Policy</a></li>
+                        <li><a href="#" class="text-slate hover:text-emerald">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                    <p class="text-sm text-slate">
+                        Verified by the Office of the Data Protection Commissioner
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-slate">
+                <p>© 2025 Kenya Petitions. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="js/scripts.js"></script>
