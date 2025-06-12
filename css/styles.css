@@ -1,67 +1,214 @@
-/* Custom styles for Kenya Petitions */
+/* Kenya Petitions - Professional Accessibility-Focused Styles */
 :root {
-    --pearl: #F5F6F5;
-    --charcoal: #1F2328;
+    /* Enhanced color palette with better contrast ratios */
+    --pearl: #F8F9FA;
+    --charcoal: #212529;
     --emerald: #2E8B57;
-    --emerald-hover: #4CAF50;
-    --slate: #4B5563;
-    --offwhite: #FAFAF9;
-    --charcoal-hover: #171A1E;
+    --emerald-dark: #1E6B47;
+    --emerald-light: #4CAF50;
+    --slate: #495057;
+    --offwhite: #F8F9FA;
+    --border-light: #E9ECEF;
+    --focus-ring: rgba(46, 139, 87, 0.25);
+    
+    /* Typography */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Playfair Display', Georgia, serif;
+    
+    /* Spacing */
+    --section-padding: 3rem;
 }
 
-/* Base Styles */
+/* Base Styles with accessibility improvements */
 body {
-    font-family: 'Inter', Arial, sans-serif;
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: var(--charcoal);
+    background-color: var(--offwhite);
 }
 
-/* Color Utilities */
+/* Typography Hierarchy */
+h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    line-height: 1.3;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+
+p {
+    margin-bottom: 1.25rem;
+    max-width: 70ch;
+}
+
+/* Color Utilities with AA/AAA contrast compliance */
 .bg-pearl { background-color: var(--pearl); }
-.bg-charcoal { background-color: var(--charcoal); }
-.bg-emerald { background-color: var(--emerald); }
+.bg-charcoal { 
+    background-color: var(--charcoal);
+    color: var(--offwhite);
+}
+.bg-emerald { 
+    background-color: var(--emerald);
+    color: white;
+}
 .bg-offwhite { background-color: var(--offwhite); }
 
 .text-charcoal { color: var(--charcoal); }
 .text-emerald { color: var(--emerald); }
 .text-slate { color: var(--slate); }
 
-/* Interactive Elements */
-.bg-emerald-hover:hover { background-color: var(--emerald-hover); }
-nav a:hover i { color: var(--emerald-hover); }
+/* Section Styling */
+.section {
+    padding: var(--section-padding) 1rem;
+}
 
-/* Form Styles */
+.section-dark {
+    background-color: var(--charcoal);
+    color: var(--offwhite);
+}
+
+.section-emerald {
+    background-color: var(--emerald);
+    color: white;
+}
+
+/* Hero Section with improved accessibility */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.8), url('assets/kenya-protest.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 4rem 1rem;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Interactive Elements with focus states */
+a, button {
+    transition: all 0.2s ease;
+}
+
+a:hover, button:hover {
+    opacity: 0.9;
+}
+
+a:focus, button:focus {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+}
+
+.btn-emerald {
+    background-color: var(--emerald);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+}
+
+.btn-emerald:hover {
+    background-color: var(--emerald-dark);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--emerald);
+    color: var(--emerald);
+}
+
+.btn-outline:hover {
+    background-color: var(--emerald);
+    color: white;
+}
+
+/* Card Components */
+.card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.impact-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.impact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.stat-highlight {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--emerald);
+    line-height: 1;
+}
+
+/* Form Styles with accessibility improvements */
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
 form input, 
 form select, 
 form textarea {
-    border-color: #d1d5db;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-sans);
 }
 
 form input:focus, 
 form select:focus, 
 form textarea:focus {
-    outline: none;
     border-color: var(--emerald);
-    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+    outline: none;
 }
 
 /* Modal Styles */
 #petitionModal {
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    visibility: hidden;
+    opacity: 0;
 }
 
 #petitionModal.show {
-    display: flex;
+    visibility: visible;
     opacity: 1;
+}
+
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 /* Legal Content Styles */
 .legal-heading {
-    font-family: 'Playfair Display', serif;
-    color: #1a365d;
+    font-family: var(--font-serif);
+    color: var(--charcoal);
+    margin-top: 2rem;
 }
 
 .policy-box {
-    border-left: 4px solid #2c5282;
-    background-color: #f8fafc;
+    border-left: 4px solid var(--emerald);
+    background-color: var(--pearl);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
 }
 
 .data-protection-act {
@@ -69,30 +216,42 @@ form textarea:focus {
     border-left: 4px solid #3182ce;
 }
 
+/* Accessibility Helpers */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
 /* Responsive Styles */
-@media (max-width: 640px) {
-    #petitionModal {
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-        overscroll-behavior: contain; /* Prevent background scrolling */
+@media (max-width: 768px) {
+    :root {
+        --section-padding: 2rem;
     }
     
-    #petitionModal > div {
-        max-height: 90vh;
-        overflow-y: auto;
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    h3 { font-size: 1.5rem; }
+    
+    .hero-section {
+        min-height: 50vh;
+        padding: 3rem 1rem;
     }
 }
-        .hero-section {the
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/kenya-protest.jpg');
-            background-size: cover;
-            background-position: center;
-        }
-        .impact-card {
-            transition: transform 0.3s ease;
-        }
-        .impact-card:hover {
-            transform: translateY(-5px);
-        }
-        .stat-highlight {
-            font-family: 'Playfair Display', serif;
-        }
-   
+
+@media (max-width: 640px) {
+    #petitionModal > div {
+        width: 95%;
+        margin: 1rem auto;
+    }
+    
+    .stat-highlight {
+        font-size: 2rem;
+    }
+}
