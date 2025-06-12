@@ -1,4 +1,6 @@
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Custom styles for Kenya Petitions */
 :root {
@@ -11,73 +13,76 @@
     --charcoal-hover: #171A1E;
 }
 
+/* Base styles */
 body {
-    font-family: 'Inter', Arial, sans-serif;
+    @apply font-sans bg-pearl text-charcoal;
 }
 
-.bg-pearl {
-    background-color: var(--pearl);
+/* Custom utility classes */
+.bg-pearl { background-color: var(--pearl); }
+.bg-charcoal { background-color: var(--charcoal); }
+.bg-emerald { background-color: var(--emerald); }
+.bg-emerald-hover:hover { background-color: var(--emerald-hover); }
+.bg-offwhite { background-color: var(--offwhite); }
+
+.text-charcoal { color: var(--charcoal); }
+.text-emerald { color: var(--emerald); }
+.text-slate { color: var(--slate); }
+
+.border-emerald { border-color: var(--emerald); }
+
+/* Navigation */
+.nav-link {
+    @apply text-charcoal hover:text-emerald transition-colors duration-200;
 }
 
-.bg-charcoal {
-    background-color: var(--charcoal);
+.nav-link i {
+    @apply transition-colors duration-200;
 }
 
-.text-charcoal {
-    color: var(--charcoal);
+/* Buttons */
+.btn {
+    @apply px-4 py-2 rounded-md transition-colors duration-200;
 }
 
-.text-emerald {
-    color: var(--emerald);
+.btn-primary {
+    @apply bg-emerald text-white hover:bg-emerald-hover;
 }
 
-.bg-emerald {
-    background-color: var(--emerald);
+.btn-outline {
+    @apply border border-emerald text-emerald hover:bg-emerald hover:text-white;
 }
 
-.bg-emerald-hover:hover {
-    background-color: var(--emerald-hover);
+/* Forms */
+.form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-emerald focus:ring-1 focus:ring-emerald;
 }
 
-.text-slate {
-    color: var(--slate);
+.form-textarea {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-emerald focus:ring-1 focus:ring-emerald;
 }
 
-.bg-offwhite {
-    background-color: var(--offwhite);
+/* Modal */
+.modal {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 pointer-events-none transition-opacity duration-300;
 }
 
-#petitionModal {
-    transition: opacity 0.3s ease-in-out;
+.modal.show {
+    @apply opacity-100 pointer-events-auto;
 }
 
-#petitionModal.show {
-    display: flex;
-    opacity: 1;
+.modal-content {
+    @apply bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto;
 }
 
-form input, form select, form textarea {
-    border-color: #d1d5db;
+/* Petition cards */
+.petition-card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-200;
 }
 
-form input:focus, form select:focus, form textarea:focus {
-    outline: none;
-    border-color: var(--emerald);
-    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
-}
-
-nav a:hover i {
-    color: var(--emerald-hover);
-}
-/* Ensure modal content is scrollable on mobile */
+/* Responsive adjustments */
 @media (max-width: 640px) {
-    #petitionModal {
-        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-        overscroll-behavior: contain; /* Prevent background scrolling */
-    }
-    
-    #petitionModal > div {
-        max-height: 90vh;
-        overflow-y: auto;
+    .modal-content {
+        @apply max-w-[95%];
     }
 }
