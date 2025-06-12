@@ -3,63 +3,351 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Kenya Petitions</title>
+    <title>About - Kenya Petitions | Your Voice for Change</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="css/styles.css">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              pearl: '#F5F6F5',
+              charcoal: '#1F2328',
+              emerald: '#2E8B57',
+              'emerald-hover': '#4CAF50',
+              slate: '#4B5563',
+              offwhite: '#FAFAF9',
+            },
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap">
     <link rel="icon" href="assets/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+      @layer components {
+        .btn {
+          @apply px-6 py-3 rounded-lg transition-all duration-300 font-medium;
+        }
+        .btn-primary {
+          @apply bg-emerald text-white hover:bg-emerald-hover hover:shadow-lg;
+        }
+        .section-title {
+          @apply text-3xl md:text-4xl font-bold text-center mb-12 text-charcoal font-serif;
+        }
+        .feature-card {
+          @apply bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300 h-full;
+        }
+      }
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+      h1, h2, h3, .font-serif {
+        font-family: 'Playfair Display', serif;
+      }
+    </style>
 </head>
 <body class="bg-pearl flex flex-col min-h-screen">
     <!-- Header -->
-    <header class="bg-charcoal text-white p-4">
-        <div class="container mx-auto flex items-center">
-            <img src="assets/logo.png" alt="Kenya Coat of Arms" class="h-8 mr-2">
-            <h1 class="text-lg font-bold">Kenya Petitions</h1>
+    <header class="bg-charcoal text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="assets/logo.png" alt="Kenya Coat of Arms" class="h-10 mr-3">
+                <h1 class="text-xl font-bold">Kenya Petitions</h1>
+            </div>
+            <nav class="hidden md:flex space-x-6">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link text-emerald">About</a>
+                <a href="petitions.html" class="nav-link">Petitions</a>
+                <a href="privacy.html" class="nav-link">Privacy</a>
+            </nav>
         </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about" class="container mx-auto p-4 flex-grow">
-        <h2 class="text-2xl font-bold text-center text-charcoal mb-4">About Kenya Petitions</h2>
-        <div class="bg-offwhite p-6 rounded-lg shadow-md">
-            <p class="text-slate mb-4">
-                Kenya Petitions is a platform empowering citizens to drive change in public sectors like health, education, and governance through signature collection.
-            </p>
-            <p class="text-slate mb-4">
-                Our mission is to create a transparent space for Kenyans to raise issues, support causes, and engage authorities, fostering accountability and democracy.
-            </p>
-            <p class="text-slate">
-                Rooted in the Kenyan Constitution (Articles 37, 119, 257), we champion the right to petition. Join us to make your voice heard.
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-emerald to-emerald-hover text-white py-16 md:py-24">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">About Kenya Petitions</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">
+                Empowering citizens to drive meaningful change through collective action
             </p>
         </div>
     </section>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="bg-charcoal text-white p-4 fixed bottom-0 w-full z-10">
+    <!-- Mission Section -->
+    <section class="py-16 bg-offwhite">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Our Mission & Vision</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="feature-card">
+                    <div class="text-emerald text-4xl mb-4">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-charcoal">Our Mission</h3>
+                    <p class="text-slate">
+                        To create a transparent digital platform where every Kenyan can raise issues, support causes, and engage with authorities to foster accountability and participatory democracy. We bridge the gap between citizens and decision-makers through technology.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-emerald text-4xl mb-4">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-charcoal">Our Vision</h3>
+                    <p class="text-slate">
+                        A Kenya where every citizen's voice matters in shaping public policy and governance. We envision a future where petitions lead to tangible solutions for community challenges, creating a more responsive and accountable government.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Our Core Values</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="feature-card">
+                    <div class="text-emerald text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-charcoal">Integrity</h3>
+                    <p class="text-slate">
+                        We maintain the highest standards of transparency in petition verification and signature validation. Every action on our platform is accountable and traceable.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-emerald text-4xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-charcoal">Inclusivity</h3>
+                    <p class="text-slate">
+                        Our platform serves all Kenyans regardless of location, background, or status. We prioritize accessibility for marginalized communities.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="text-emerald text-4xl mb-4">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-charcoal">Innovation</h3>
+                    <p class="text-slate">
+                        We continuously improve our technology to enhance user experience while maintaining robust security and data protection standards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legal Basis Section -->
+    <section class="py-16 bg-pearl">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Constitutional Foundation</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/3 bg-emerald text-white p-8 flex flex-col justify-center">
+                        <h3 class="text-2xl font-bold mb-4">Legal Basis</h3>
+                        <p class="mb-6">
+                            Kenya Petitions operates under the following constitutional provisions:
+                        </p>
+                        <div class="flex items-center">
+                            <i class="fas fa-gavel text-3xl mr-4"></i>
+                            <span class="text-lg font-medium">Kenyan Constitution</span>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3 p-8">
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg text-charcoal mb-2">Article 37</h4>
+                            <p class="text-slate">
+                                Guarantees every person the right to peaceably and unarmed assemble, demonstrate, picket, and present petitions to public authorities.
+                            </p>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="font-bold text-lg text-charcoal mb-2">Article 119</h4>
+                            <p class="text-slate">
+                                Provides for the right to petition Parliament to consider any matter within its authority, including petitioning to enact, amend or repeal any legislation.
+                            </p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg text-charcoal mb-2">Article 257</h4>
+                            <p class="text-slate">
+                                Establishes provisions for popular initiatives through collection of signatures from registered voters.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-16 bg-offwhite">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title">Our Team</h2>
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="text-center">
+                    <div class="bg-white rounded-full w-40 h-40 mx-auto mb-4 overflow-hidden shadow-lg">
+                        <!-- Placeholder for team member image -->
+                        <div class="w-full h-full bg-emerald text-white flex items-center justify-center text-5xl">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal">Jonathan Mwaniki</h3>
+                    <p class="text-emerald font-medium mb-2">Founder & Director</p>
+                    <p class="text-slate max-w-xs mx-auto">
+                        Passionate about civic technology and citizen engagement in governance processes.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white rounded-full w-40 h-40 mx-auto mb-4 overflow-hidden shadow-lg">
+                        <!-- Placeholder for team member image -->
+                        <div class="w-full h-full bg-emerald text-white flex items-center justify-center text-5xl">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal">Legal Team</h3>
+                    <p class="text-emerald font-medium mb-2">Constitutional Experts</p>
+                    <p class="text-slate max-w-xs mx-auto">
+                        Ensuring all petitions comply with Kenyan law and constitutional requirements.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-white rounded-full w-40 h-40 mx-auto mb-4 overflow-hidden shadow-lg">
+                        <!-- Placeholder for team member image -->
+                        <div class="w-full h-full bg-emerald text-white flex items-center justify-center text-5xl">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-xl font-bold text-charcoal">Tech Team</h3>
+                    <p class="text-emerald font-medium mb-2">Platform Developers</p>
+                    <p class="text-slate max-w-xs mx-auto">
+                        Building secure, accessible digital tools for civic participation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-emerald text-white">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title text-white">Contact Us</h2>
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Get In Touch</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-4 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold">Phone</h4>
+                                <p>0706 396 305</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-4 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold">Email</h4>
+                                <p>jonathanmwaniki07@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-4 text-xl"></i>
+                            <div>
+                                <h4 class="font-bold">Hours</h4>
+                                <p>Monday - Friday: 8:00 AM - 5:00 PM</p>
+                                <p>Weekends: Emergency petitions only</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg p-6 text-charcoal">
+                    <h3 class="text-2xl font-bold mb-6">Send Us a Message</h3>
+                    <form>
+                        <div class="mb-4">
+                            <label class="block font-medium mb-2">Your Name</label>
+                            <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-medium mb-2">Email Address</label>
+                            <input type="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald">
+                        </div>
+                        <div class="mb-4">
+                            <label class="block font-medium mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-full">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bottom Navigation Bar (Mobile) -->
+    <nav class="md:hidden bg-charcoal text-white p-4 fixed bottom-0 w-full z-10">
         <div class="container mx-auto flex justify-around items-center">
             <a href="index.html" class="flex flex-col items-center">
-                <i class="fas fa-house text-2xl text-emerald"></i>
+                <i class="fas fa-house text-2xl"></i>
                 <span class="text-sm">Home</span>
             </a>
-            <a href="about.html" class="flex flex-col items-center">
-                <i class="fas fa-info-circle text-2xl text-emerald"></i>
+            <a href="about.html" class="flex flex-col items-center text-emerald">
+                <i class="fas fa-info-circle text-2xl"></i>
                 <span class="text-sm">About</span>
             </a>
             <a href="petitions.html" class="flex flex-col items-center">
-                <i class="fas fa-file-signature text-2xl text-emerald"></i>
+                <i class="fas fa-file-signature text-2xl"></i>
                 <span class="text-sm">Petitions</span>
             </a>
             <a href="privacy.html" class="flex flex-col items-center">
-                <i class="fas fa-shield-alt text-2xl text-emerald"></i>
+                <i class="fas fa-shield-alt text-2xl"></i>
                 <span class="text-sm">Privacy</span>
             </a>
         </div>
     </nav>
 
     <!-- Footer -->
-    <footer class="bg-charcoal text-white text-center p-4 mt-4">
-        <p>© 2025 Kenya Petitions. All rights reserved.</p>
-        <p>Icons by <a href="https://fontawesome.com" class="underline text-emerald">Font Awesome</a>.</p>
+    <footer class="bg-charcoal text-white py-8 mt-4">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Kenya Petitions</h3>
+                    <p class="text-slate">
+                        Empowering citizens to drive change through collective action and democratic participation.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-slate hover:text-emerald">Home</a></li>
+                        <li><a href="about.html" class="text-slate hover:text-emerald">About Us</a></li>
+                        <li><a href="petitions.html" class="text-slate hover:text-emerald">Current Petitions</a></li>
+                        <li><a href="privacy.html" class="text-slate hover:text-emerald">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate hover:text-emerald">Terms of Service</a></li>
+                        <li><a href="#" class="text-slate hover:text-emerald">Cookie Policy</a></li>
+                        <li><a href="#" class="text-slate hover:text-emerald">GDPR Compliance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-slate hover:text-emerald text-xl"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                    <p class="text-sm text-slate">
+                        Verified by the Office of the Data Protection Commissioner
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-slate">
+                <p>© 2025 Kenya Petitions. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
 
     <script src="js/scripts.js"></script>
