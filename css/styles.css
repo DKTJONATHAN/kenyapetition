@@ -81,3 +81,18 @@ form textarea:focus {
         overflow-y: auto;
     }
 }
+        .hero-section {the
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('assets/kenya-protest.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .impact-card {
+            transition: transform 0.3s ease;
+        }
+        .impact-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-highlight {
+            font-family: 'Playfair Display', serif;
+        }
+   
