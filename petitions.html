@@ -1,4 +1,214 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petitions - Kenya Petitions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="assets/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body class="bg-pearl flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-charcoal text-white p-4">
+        <div class="container mx-auto flex items-center">
+            <img src="assets/logo.png" alt="Kenya Coat of Arms" class="h-8 mr-2">
+            <h1 class="text-lg font-bold">Kenya Petitions</h1>
+        </div>
+    </header>
+
+    <!-- Petitions Section -->
+    <section id="petitions" class="container mx-auto p-4 flex-grow">
+        <h2 class="text-2xl font-bold text-center text-charcoal mb-4">Active Petitions</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Petition Card -->
+            <div class="bg-offwhite p-4 rounded-lg shadow-md">
+                <img src="assets/Eliud-Lagat.png" alt="Petition Image" class="w-full h-48 object-cover rounded-lg mb-4">
+                <h3 class="text-xl font-bold text-charcoal mb-2">Dismissal of DIG Eliud Lagat</h3>
+                <p class="text-slate mb-4">
+                    We demand the dismissal of Deputy Inspector General Eliud Lagat for his alleged role in the unlawful killing of Albert Ojwang' by police, seeking justice and accountability.
+                </p>
+                <button onclick="openModal('petition1')" class="bg-emerald text-white py-2 px-4 rounded hover:bg-emerald-hover">
+                    Sign Here
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="petitionModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-offwhite p-6 rounded-lg w-full max-w-md">
+            <h3 class="text-xl font-bold text-charcoal mb-4">Sign Petition: Dismissal of DIG Eliud Lagat</h3>
+            <form id="signatureForm" onsubmit="submitToGoogleForm(event)">
+                <!-- Legal Notice -->
+                <div class="mb-4 p-3 bg-yellow-50 border-l-4 border-yellow-400">
+                    <p class="text-sm text-yellow-700">
+                        <strong>Legal Notice:</strong> By signing this petition, you confirm you are a registered voter in Kenya. False information may lead to legal consequences under Kenyan law.
+                    </p>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="fullName" class="block text-slate">Full Name (as appears in ID)</label>
+                    <input type="text" id="fullName" name="fullName" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="idNumber" class="block text-slate">National ID/Passport Number</label>
+                    <input type="text" id="idNumber" name="idNumber" class="w-full px-3 py-2 border rounded" required>
+                    <p class="text-xs text-gray-500 mt-1">For verification purposes only. Will not be publicly displayed.</p>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="email" class="block text-slate">Email Address</label>
+                    <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="phone" class="block text-slate">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="county" class="block text-slate">County of Registration (Voter)</label>
+                    <select id="county" name="county" class="w-full px-3 py-2 border rounded" required>
+                        <option value="">Select County</option>
+                        <option value="Mombasa">Mombasa</option>
+                        <option value="Kwale">Kwale</option>
+                        <option value="Kilifi">Kilifi</option>
+                        <option value="Tana River">Tana River</option>
+                        <option value="Lamu">Lamu</option>
+                        <option value="Taita Taveta">Taita Taveta</option>
+                        <option value="Garissa">Garissa</option>
+                        <option value="Wajir">Wajir</option>
+                        <option value="Mandera">Mandera</option>
+                        <option value="Marsabit">Marsabit</option>
+                        <option value="Isiolo">Isiolo</option>
+                        <option value="Meru">Meru</option>
+                        <option value="Tharaka Nithi">Tharaka Nithi</option>
+                        <option value="Embu">Embu</option>
+                        <option value="Kitui">Kitui</option>
+                        <option value="Machakos">Machakos</option>
+                        <option value="Makueni">Makueni</option>
+                        <option value="Nyandarua">Nyandarua</option>
+                        <option value="Nyeri">Nyeri</option>
+                        <option value="Kirinyaga">Kirinyaga</option>
+                        <option value="Murang'a">Murang'a</option>
+                        <option value="Kiambu">Kiambu</option>
+                        <option value="Turkana">Turkana</option>
+                        <option value="West Pokot">West Pokot</option>
+                        <option value="Samburu">Samburu</option>
+                        <option value="Trans Nzoia">Trans Nzoia</option>
+                        <option value="Uasin Gishu">Uasin Gishu</option>
+                        <option value="Elgeyo Marakwet">Elgeyo Marakwet</option>
+                        <option value="Nandi">Nandi</option>
+                        <option value="Baringo">Baringo</option>
+                        <option value="Laikipia">Laikipia</option>
+                        <option value="Nakuru">Nakuru</option>
+                        <option value="Narok">Narok</option>
+                        <option value="Kajiado">Kajiado</option>
+                        <option value="Kericho">Kericho</option>
+                        <option value="Bomet">Bomet</option>
+                        <option value="Kakamega">Kakamega</option>
+                        <option value="Vihiga">Vihiga</option>
+                        <option value="Bungoma">Bungoma</option>
+                        <option value="Busia">Busia</option>
+                        <option value="Siaya">Siaya</option>
+                        <option value="Kisumu">Kisumu</option>
+                        <option value="Homa Bay">Homa Bay</option>
+                        <option value="Migori">Migori</option>
+                        <option value="Kisii">Kisii</option>
+                        <option value="Nyamira">Nyamira</option>
+                        <option value="Nairobi">Nairobi</option>
+                        <option value="Diaspora">Diaspora (Kenyan Citizens Abroad)</option>
+                    </select>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="constituency" class="block text-slate">Constituency</label>
+                    <input type="text" id="constituency" name="constituency" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="ward" class="block text-slate">Ward</label>
+                    <input type="text" id="ward" name="ward" class="w-full px-3 py-2 border rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <label for="declaration" class="block text-slate">Declaration</label>
+                    <textarea id="declaration" name="declaration" rows="4" placeholder="I support this petition because..." class="w-full px-3 py-2 border rounded" required></textarea>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="signature" class="block text-slate">Signature (Full Name)</label>
+                    <input type="text" id="signature" name="signature" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="date" class="block text-slate">Date</label>
+                    <input type="date" id="date" name="date" class="w-full px-3 py-2 border rounded" required>
+                </div>
+                
+                <div class="mb-4 flex items-start">
+                    <input type="checkbox" id="consent" name="consent" class="mt-1 mr-2" required>
+                    <label for="consent" class="text-sm text-slate">
+                        I confirm that the information provided is accurate and that I am a registered voter in Kenya. I understand that this information may be verified against official records.
+                    </label>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="button" onclick="closeModal()" class="mr-2 bg-gray-300 text-slate py-2 px-4 rounded hover:bg-gray-400">
+                        Cancel
+                    </button>
+                    <button type="submit" class="bg-emerald text-white py-2 px-4 rounded hover:bg-emerald-hover">
+                        Submit Signature
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Success Message (hidden by default) -->
+    <div id="successMessage" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-offwhite p-6 rounded-lg w-full max-w-md text-center">
+            <i class="fas fa-check-circle text-5xl text-emerald mb-4"></i>
+            <h3 class="text-xl font-bold text-charcoal mb-2">Thank You!</h3>
+            <p class="text-slate mb-4">Your signature has been successfully recorded.</p>
+            <button onclick="closeSuccessMessage()" class="bg-emerald text-white py-2 px-4 rounded hover:bg-emerald-hover">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="bg-charcoal text-white p-4 fixed bottom-0 w-full z-10">
+        <div class="container mx-auto flex justify-around items-center">
+            <a href="index.html" class="flex flex-col items-center">
+                <i class="fas fa-house text-2xl text-emerald"></i>
+                <span class="text-sm">Home</span>
+            </a>
+            <a href="about.html" class="flex flex-col items-center">
+                <i class="fas fa-info-circle text-2xl text-emerald"></i>
+                <span class="text-sm">About</span>
+            </a>
+            <a href="petitions.html" class="flex flex-col items-center">
+                <i class="fas fa-file-signature text-2xl text-emerald"></i>
+                <span class="text-sm">Petitions</span>
+            </a>
+            <a href="privacy.html" class="flex flex-col items-center">
+                <i class="fas fa-shield-alt text-2xl text-emerald"></i>
+                <span class="text-sm">Privacy</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white text-center p-4 mt-4">
+        <p>© 2025 Kenya Petitions. All rights reserved.</p>
+        <p>Icons by <a href="https://fontawesome.com" class="underline text-emerald">Font Awesome</a>.</p>
+    </footer>
+
+   <script>
     // Google Sheet Integration
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw6t5U5luYmyK0w1K5XbJlR3KiqBcDeW2nUy4rVwlSKa4h69UeAv97F3EWXjCfPy-IE/exec'; // Replace with your Google Apps Script Web App URL
     const sheetId = '1PsDXFSbTCCXijgQgPGBltjDDnIitfnNXvmUmOCZo1po'; // Replace with your Google Sheet ID
@@ -72,3 +282,5 @@
         document.getElementById('successMessage').classList.add('hidden');
     }
 </script>
+</body>
+</html>
