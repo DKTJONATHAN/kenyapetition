@@ -1,0 +1,83 @@
+
+
+/* Custom styles for Kenya Petitions */
+:root {
+    --pearl: #F5F6F5;
+    --charcoal: #1F2328;
+    --emerald: #2E8B57;
+    --emerald-hover: #4CAF50;
+    --slate: #4B5563;
+    --offwhite: #FAFAF9;
+    --charcoal-hover: #171A1E;
+}
+
+body {
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.bg-pearl {
+    background-color: var(--pearl);
+}
+
+.bg-charcoal {
+    background-color: var(--charcoal);
+}
+
+.text-charcoal {
+    color: var(--charcoal);
+}
+
+.text-emerald {
+    color: var(--emerald);
+}
+
+.bg-emerald {
+    background-color: var(--emerald);
+}
+
+.bg-emerald-hover:hover {
+    background-color: var(--emerald-hover);
+}
+
+.text-slate {
+    color: var(--slate);
+}
+
+.bg-offwhite {
+    background-color: var(--offwhite);
+}
+
+#petitionModal {
+    transition: opacity 0.3s ease-in-out;
+}
+
+#petitionModal.show {
+    display: flex;
+    opacity: 1;
+}
+
+form input, form select, form textarea {
+    border-color: #d1d5db;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+    outline: none;
+    border-color: var(--emerald);
+    box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+}
+
+nav a:hover i {
+    color: var(--emerald-hover);
+}
+/* Ensure modal content is scrollable on mobile */
+@media (max-width: 640px) {
+    #petitionModal {
+        -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        overscroll-behavior: contain; /* Prevent background scrolling */
+    }
+    
+    #petitionModal > div {
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+}
