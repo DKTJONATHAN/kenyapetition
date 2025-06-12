@@ -1,34 +1,45 @@
-/* Kenya Petitions - Professional Accessibility-Focused Styles */
+/* Kenya Petitions - Complete Stylesheet */
 :root {
-    /* Enhanced color palette with better contrast ratios */
-    --pearl: #F8F9FA;
-    --charcoal: #212529;
+    /* Color Palette */
+    --pearl: #F5F6F5;
+    --charcoal: #1F2328;
+    --charcoal-hover: #171A1E;
     --emerald: #2E8B57;
-    --emerald-dark: #1E6B47;
-    --emerald-light: #4CAF50;
-    --slate: #495057;
-    --offwhite: #F8F9FA;
-    --border-light: #E9ECEF;
-    --focus-ring: rgba(46, 139, 87, 0.25);
+    --emerald-hover: #4CAF50;
+    --emerald-light: #E8F5E9;
+    --slate: #4B5563;
+    --offwhite: #FAFAF9;
+    --white: #FFFFFF;
+    
+    /* Accent Colors */
+    --blue: #2563EB;
+    --green: #16A34A;
+    --yellow: #D97706;
+    --red: #DC2626;
+    --purple: #7C3AED;
     
     /* Typography */
-    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-serif: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Roboto', sans-serif;
+    --font-serif: 'Playfair Display', serif;
     
     /* Spacing */
     --section-padding: 3rem;
+    --container-width: 1200px;
 }
 
-/* Base Styles with accessibility improvements */
+/* Base Styles */
 body {
     font-family: var(--font-sans);
     line-height: 1.6;
     color: var(--charcoal);
-    background-color: var(--offwhite);
+    background-color: var(--pearl);
+    margin: 0;
+    padding: 0;
+    padding-bottom: 80px; /* For bottom nav */
 }
 
-/* Typography Hierarchy */
-h1, h2, h3, h4 {
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-serif);
     line-height: 1.3;
     margin-bottom: 1rem;
@@ -44,214 +55,308 @@ p {
     max-width: 70ch;
 }
 
-/* Color Utilities with AA/AAA contrast compliance */
-.bg-pearl { background-color: var(--pearl); }
-.bg-charcoal { 
-    background-color: var(--charcoal);
-    color: var(--offwhite);
-}
-.bg-emerald { 
-    background-color: var(--emerald);
-    color: white;
-}
-.bg-offwhite { background-color: var(--offwhite); }
-
-.text-charcoal { color: var(--charcoal); }
-.text-emerald { color: var(--emerald); }
-.text-slate { color: var(--slate); }
-
-/* Section Styling */
-.section {
-    padding: var(--section-padding) 1rem;
-}
-
-.section-dark {
-    background-color: var(--charcoal);
-    color: var(--offwhite);
-}
-
-.section-emerald {
-    background-color: var(--emerald);
-    color: white;
-}
-
-/* Hero Section with improved accessibility */
-.hero-section {
-    background: linear-gradient(rgba(0,0,0,0.8), url('assets/kenya-protest.jpg');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 4rem 1rem;
-    min-height: 60vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.hero-content {
-    max-width: 800px;
+/* Layout */
+.container {
+    width: 100%;
+    max-width: var(--container-width);
     margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+header {
+    background-color: var(--charcoal);
+    color: var(--white);
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+}
+
+header img {
+    height: 40px;
+    margin-right: 1rem;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* Hero Section */
+.bg-pearl {
+    background-color: var(--pearl);
+}
+
+.hero-section {
+    padding: var(--section-padding) 1rem;
     text-align: center;
 }
 
-/* Interactive Elements with focus states */
-a, button {
-    transition: all 0.2s ease;
-}
-
-a:hover, button:hover {
-    opacity: 0.9;
-}
-
-a:focus, button:focus {
-    outline: 3px solid var(--focus-ring);
-    outline-offset: 2px;
-}
-
-.btn-emerald {
-    background-color: var(--emerald);
-    color: white;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.25rem;
-}
-
-.btn-emerald:hover {
-    background-color: var(--emerald-dark);
-}
-
-.btn-outline {
-    background-color: transparent;
-    border: 2px solid var(--emerald);
-    color: var(--emerald);
-}
-
-.btn-outline:hover {
-    background-color: var(--emerald);
-    color: white;
-}
-
-/* Card Components */
-.card {
-    background: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.impact-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.impact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-.stat-highlight {
-    font-family: var(--font-serif);
+.hero-section h1 {
     font-size: 2.5rem;
-    color: var(--emerald);
-    line-height: 1;
-}
-
-/* Form Styles with accessibility improvements */
-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-}
-
-form input, 
-form select, 
-form textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border-light);
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-    font-family: var(--font-sans);
-}
-
-form input:focus, 
-form select:focus, 
-form textarea:focus {
-    border-color: var(--emerald);
-    box-shadow: 0 0 0 3px var(--focus-ring);
-    outline: none;
-}
-
-/* Modal Styles */
-#petitionModal {
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-    visibility: hidden;
-    opacity: 0;
-}
-
-#petitionModal.show {
-    visibility: visible;
-    opacity: 1;
-}
-
-.modal-content {
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-/* Legal Content Styles */
-.legal-heading {
-    font-family: var(--font-serif);
     color: var(--charcoal);
+    margin-bottom: 1.5rem;
+}
+
+.hero-section p {
+    font-size: 1.25rem;
+    color: var(--slate);
+    margin-bottom: 2rem;
+}
+
+/* Stats Section */
+.stats-section {
+    padding: var(--section-padding) 1rem;
+    background-color: var(--white);
+}
+
+.stats-section h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background-color: var(--pearl);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card.blue .stat-number { color: var(--blue); }
+.stat-card.green .stat-number { color: var(--green); }
+.stat-card.yellow .stat-number { color: var(--yellow); }
+.stat-card.red .stat-number { color: var(--red); }
+
+/* How It Works Section */
+.bg-offwhite {
+    background-color: var(--offwhite);
+}
+
+.how-it-works {
+    padding: var(--section-padding) 1rem;
+}
+
+.how-it-works h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.process-step {
+    margin-bottom: 2rem;
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.step-number {
+    background-color: var(--blue);
+    color: var(--white);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-weight: bold;
+}
+
+.step-2 .step-number { background-color: var(--green); }
+.step-3 .step-number { background-color: var(--purple); }
+
+.step-content {
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    border-left: 4px solid var(--blue);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.step-2 .step-content { border-left-color: var(--green); }
+.step-3 .step-content { border-left-color: var(--purple); }
+
+/* Testimonials Section */
+.testimonials {
+    background-color: var(--charcoal);
+    color: var(--white);
+    padding: var(--section-padding) 1rem;
+}
+
+.testimonials h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+}
+
+.testimonial-card {
+    background-color: var(--slate);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.testimonial-author {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-text {
+    font-style: italic;
+}
+
+/* CTA Sections */
+.cta-section {
+    padding: var(--section-padding) 1rem;
+    text-align: center;
+}
+
+.cta-emerald {
+    background-color: var(--emerald);
+    color: var(--white);
+}
+
+.cta-charcoal {
+    background-color: var(--charcoal);
+    color: var(--white);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
     margin-top: 2rem;
 }
 
-.policy-box {
-    border-left: 4px solid var(--emerald);
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--white);
+    color: var(--emerald);
+}
+
+.btn-primary:hover {
     background-color: var(--pearl);
+}
+
+.btn-outline {
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.btn-outline:hover {
+    background-color: var(--white);
+    color: var(--emerald);
+}
+
+.btn-dark {
+    background-color: var(--emerald);
+    color: var(--white);
+}
+
+.btn-dark:hover {
+    background-color: var(--emerald-hover);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--charcoal);
+    padding: 0.75rem 0;
+    z-index: 100;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+.nav-link i {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+    color: var(--emerald);
+}
+
+/* Footer */
+footer {
+    background-color: var(--charcoal);
+    color: var(--white);
+    text-align: center;
     padding: 1.5rem;
-    margin: 1.5rem 0;
+    margin-top: auto;
 }
 
-.data-protection-act {
-    background-color: #ebf8ff;
-    border-left: 4px solid #3182ce;
-}
-
-/* Accessibility Helpers */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
-}
-
-/* Responsive Styles */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    :root {
-        --section-padding: 2rem;
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .testimonial-grid {
+        grid-template-columns: 1fr;
     }
     
     h1 { font-size: 2rem; }
     h2 { font-size: 1.75rem; }
-    h3 { font-size: 1.5rem; }
-    
-    .hero-section {
-        min-height: 50vh;
-        padding: 3rem 1rem;
-    }
 }
 
-@media (max-width: 640px) {
-    #petitionModal > div {
-        width: 95%;
-        margin: 1rem auto;
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
     }
     
-    .stat-highlight {
-        font-size: 2rem;
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
     }
 }
