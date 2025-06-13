@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const kenyanPetitionsForm = document.getElementById('KenyanPetitions');
     const dateField = document.getElementById('date');
 
+    // Google Apps Script Web App URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyyimGwhuvLPEX6kWjfkTMYJ2D-a5nHz6yJM73SyUMgfzN3OuRz242h-SxeSR0ZBWtuYA/exec';
+
     // Initialize modal buttons
     document.querySelectorAll('[data-petition-button], [onclick^="openModal"]').forEach(button => {
         button.addEventListener('click', function() {
@@ -14,12 +17,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form submission handler - Using the working approach from your second script
+    // Form submission handler
     if (kenyanPetitionsForm) {
         kenyanPetitionsForm.addEventListener('submit', submitToGoogleSheet);
     }
 
-    // Modal functions (unchanged)
+    // Modal functions
     window.openModal = function(petitionId) {
         if (dateField) {
             dateField.valueAsDate = new Date();
@@ -41,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     };
 
-    // Updated submission function using working approach
+    // Updated submission function with Google Sheets integration
     async function submitToGoogleSheet(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -54,33 +57,39 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const formData = new FormData(kenyanPetitionsForm);
             
-            // Add timestamp (like in your working script)
-            formData.append('created_at', new Date().toISOString());
+            // Add timestamp
+            formData.append('timestamp', new Date().toISOString());
 
-            // Use the same submission pattern as your working script
-            const response = await fetch(kenyanPetitionsForm.action, {
+            const response = await fetch(scriptURL, {
                 method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
+                body: formData
             });
 
-            // Success case - maintain your original popup behavior
-            closeModal();
-            successMessage.classList.remove('hidden');
-            
-            // Optional: Auto-close success message after delay (like in working script)
-            setTimeout(() => closeSuccessMessage(), 3000);
-            
+            const result = await response.json();
+
+            if (result.success) {
+                // Show success popup
+                closeModal();
+                successMessage.classList.remove('hidden');
+                
+                // Auto-close success message after 5 seconds
+                setTimeout(() => closeSuccessMessage(), 5000);
+                
+                // Reset form
+                kenyanPetitionsForm.reset();
+            } else {
+                throw new Error(result.error || 'Unknown error');
+            }
         } catch (error) {
             console.error('Error:', error);
-            alert('There was an error submitting your signature. Please try again.');
+            alert('There was an error submitting your signature: ' + error.message);
         } finally {
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalBtnText;
         }
     }
 
-    // Close modals when clicking outside (unchanged)
+    // Close modals when clicking outside
     window.addEventListener('click', function(event) {
         if (event.target === petitionModal) closeModal();
         if (event.target === successMessage) closeSuccessMessage();
