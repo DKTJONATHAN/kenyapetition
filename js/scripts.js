@@ -5,14 +5,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const successMessage = document.getElementById('successMessage');
     const kenyanPetitionsForm = document.getElementById('KenyanPetitions');
     const dateField = document.getElementById('date');
-    
+
     // Google Sheet Integration
     const scriptURL = 'https://script.google.com/macros/s/AKfycbw6t5U5luYmyK0w1K5XbJlR3KiqBcDeW2nUy4rVwlSKa4h69UeAv97F3EWXjCfPy-IE/exec';
 
-    // Initialize modal buttons
-    document.querySelectorAll('[data-petition-button]').forEach(button => {
+    // Initialize modal buttons - both data attribute and onclick handlers
+    document.querySelectorAll('[data-petition-button], [onclick^="openModal"]').forEach(button => {
         button.addEventListener('click', function() {
-            openModal(this.dataset.petitionId);
+            // Handle both data attribute and onclick approaches
+            const petitionId = this.dataset.petitionId || 
+                             (this.getAttribute('onclick') && this.getAttribute('onclick').match(/openModal\('(.+?)'\)/)?.[1]);
+            openModal(petitionId);
         });
     });
 
@@ -21,34 +24,39 @@ document.addEventListener('DOMContentLoaded', function() {
         kenyanPetitionsForm.addEventListener('submit', submitToGoogleSheet);
     }
 
-    // Modal functions
-    function openModal(petitionId) {
+    // Expose modal functions to global scope for onclick handlers
+    window.openModal = function(petitionId) {
         // Set current date
-        dateField.valueAsDate = new Date();
-        
+        if (dateField) {
+            dateField.valueAsDate = new Date();
+        }
+
         // Show modal
         petitionModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
-        
+
         // You can use petitionId to load specific petition data if needed
         console.log('Opening modal for petition:', petitionId);
-    }
+    };
 
-    function closeModal() {
+    window.closeModal = function() {
         petitionModal.classList.add('hidden');
         document.body.style.overflow = 'auto';
-        kenyanPetitionsForm.reset();
-    }
+        if (kenyanPetitionsForm) {
+            kenyanPetitionsForm.reset();
+        }
+    };
 
-    function closeSuccessMessage() {
+    window.closeSuccessMessage = function() {
         successMessage.classList.add('hidden');
         document.body.style.overflow = 'auto';
-    }
+    };
 
     async function submitToGoogleSheet(e) {
         e.preventDefault();
-        
+
         const submitBtn = e.target.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
 
@@ -83,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('There was an error submitting your signature. Please try again.');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Submit Signature';
+            submitBtn.innerHTML = originalBtnText;
         }
     }
 
