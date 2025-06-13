@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements
     const petitionModal = document.getElementById('petitionModal');
@@ -13,11 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
             openModal(petitionId);
         });
     });
-
-    // Form submission handler - Using the working approach from your second script
-    if (kenyanPetitionsForm) {
-        kenyanPetitionsForm.addEventListener('submit', submitToGoogleSheet);
-    }
 
     // Modal functions (unchanged)
     window.openModal = function(petitionId) {
@@ -41,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.style.overflow = 'auto';
     };
 
-    // Updated submission function using working approach
+    // Combined submission function with field name mapping
     async function submitToGoogleSheet(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -52,25 +48,53 @@ document.addEventListener('DOMContentLoaded', function() {
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
 
         try {
-            const formData = new FormData(kenyanPetitionsForm);
-            
-            // Add timestamp (like in your working script)
-            formData.append('created_at', new Date().toISOString());
+            // Map visible fields to hidden original names
+            document.getElementById('name').value = document.getElementById('fullName').value;
+            document.getElementById('created_at_hidden').value = new Date().toISOString();
 
-            // Use the same submission pattern as your working script
-            const response = await fetch(kenyanPetitionsForm.action, {
+            // Create a new form with only the original field names
+            const originalForm = document.createElement('form');
+            originalForm.style.display = 'none';
+            originalForm.method = 'POST';
+            originalForm.action = 'https://script.google.com/macros/s/AKfycbwExsTWLhfeCs6MMiUfqAHEbwjtcC1fkehAql-ZDecSq40VEov1GjaH03250zQafBoR8A/exec';
+            
+            // Add all hidden fields
+            const hiddenFields = ['form-name', 'type', 'created_at', 'name'];
+            hiddenFields.forEach(field => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = field;
+                input.value = document.querySelector(`[name="${field}"]`).value;
+                originalForm.appendChild(input);
+            });
+            
+            // Add other fields that don't need renaming
+            const directFields = ['phone', 'county', 'constituency', 'ward', 'declaration', 'signature', 'date', 'consent'];
+            directFields.forEach(field => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = field;
+                input.value = document.querySelector(`[name="${field}"]`).value;
+                originalForm.appendChild(input);
+            });
+            
+            document.body.appendChild(originalForm);
+            
+            // Submit and handle response
+            const response = await fetch(originalForm.action, {
                 method: 'POST',
-                body: formData,
+                body: new FormData(originalForm),
                 headers: { 'Accept': 'application/json' }
             });
 
-            // Success case - maintain your original popup behavior
+            // Success handling with your popups
             closeModal();
             successMessage.classList.remove('hidden');
-            
-            // Optional: Auto-close success message after delay (like in working script)
             setTimeout(() => closeSuccessMessage(), 3000);
-            
+
+            // Clean up
+            originalForm.remove();
+
         } catch (error) {
             console.error('Error:', error);
             alert('There was an error submitting your signature. Please try again.');
@@ -80,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Close modals when clicking outside (unchanged)
+    // Close modals when clicking outside
     window.addEventListener('click', function(event) {
         if (event.target === petitionModal) closeModal();
         if (event.target === successMessage) closeSuccessMessage();
