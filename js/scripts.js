@@ -1,124 +1,95 @@
-
-// Modal functionality
-function openModal(petitionId) {
-    const modal = document.getElementById('petitionModal');
-    modal.classList.remove('hidden');
-    modal.classList.add('show');
-}
-
-function closeModal() {
-    const modal = document.getElementById('petitionModal');
-    modal.classList.add('hidden');
-    modal.classList.remove('show');
-    document.getElementById('signatureForm').reset();
-}
-
-// Form submission
-document.getElementById('signatureForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = {
-        fullName: document.getElementById('fullName').value,
-        county: document.getElementById('county').value,
-        declaration: document.getElementById('declaration').value,
-        signature: document.getElementById('signature').value,
-        timestamp: new Date().toISOString()
-    };
-
-    // Placeholder for spreadsheet integration
-    console.log('Signature data:', formData);
-    alert('Signature submitted! (Spreadsheet integration pending.)');
-    
-    closeModal();
-});
-// Google Sheet Integration
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw6t5U5luYmyK0w1K5XbJlR3KiqBcDeW2nUy4rVwlSKa4h69UeAv97F3EWXjCfPy-IE/exec'; // Replace with your Google Apps Script Web App URL
-const sheetId = '1PsDXFSbTCCXijgQgPGBltjDDnIitfnNXvmUmOCZo1po'; // Replace with your Google Sheet ID
-
-function submitToGoogleSheet(e) {
-    e.preventDefault();
-
-    // Show loading state
-    const submitBtn = document.querySelector('#signatureForm button[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-
-    // Get form data
-    const form = document.getElementById('signatureForm');
-    const formData = new FormData(form);
-    const data = {
-        fullName: formData.get('fullName'),
-        phone: formData.get('phone'),
-        county: formData.get('county'),
-        constituency: formData.get('constituency'),
-        ward: formData.get('ward'),
-        declaration: formData.get('declaration'),
-        signature: formData.get('signature'),
-        date: formData.get('date'),
-        timestamp: new Date().toISOString()
-    };
-
-    // Send to Google Sheet via Web App
-    fetch(scriptURL, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => {
-        if (response.ok) {
-            // Show success message
-            closeModal();
-            document.getElementById('successMessage').classList.remove('hidden');
-            // Reset form
-            form.reset();
-        } else {
-            throw new Error('Network response was not ok');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('There was an error submitting your signature. Please try again.');
-    })
-    .finally(() => {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Submit Signature';
-    });
-}
-
-// Modal functions
-function openModal(petitionId) {
-    document.getElementById('petitionModal').classList.remove('hidden');
-    // Set current date
-    document.getElementById('date').valueAsDate = new Date();
-    // Prevent body scrolling when modal is open
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    document.getElementById('petitionModal').classList.add('hidden');
-    // Restore body scrolling
-    document.body.style.overflow = 'auto';
-}
-
-function closeSuccessMessage() {
-    document.getElementById('successMessage').classList.add('hidden');
-    // Restore body scrolling
-    document.body.style.overflow = 'auto';
-}
-
-// Close modal when clicking outside
-window.onclick = function(event) {
-    if (event.target == document.getElementById('petitionModal')) {
-        closeModal();
-    }
-    if (event.target == document.getElementById('successMessage')) {
-        closeSuccessMessage();
-    }
-}
-
-// Initialize any required functionality when DOM is loaded
+// Main Application
 document.addEventListener('DOMContentLoaded', function() {
-    // Any initialization code can go here
+    // Cache DOM elements
+    const petitionModal = document.getElementById('petitionModal');
+    const successMessage = document.getElementById('successMessage');
+    const kenyanPetitionsForm = document.getElementById('KenyanPetitions');
+    const dateField = document.getElementById('date');
+    
+    // Google Sheet Integration
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbw6t5U5luYmyK0w1K5XbJlR3KiqBcDeW2nUy4rVwlSKa4h69UeAv97F3EWXjCfPy-IE/exec';
+
+    // Initialize modal buttons
+    document.querySelectorAll('[data-petition-button]').forEach(button => {
+        button.addEventListener('click', function() {
+            openModal(this.dataset.petitionId);
+        });
+    });
+
+    // Form submission handler
+    if (kenyanPetitionsForm) {
+        kenyanPetitionsForm.addEventListener('submit', submitToGoogleSheet);
+    }
+
+    // Modal functions
+    function openModal(petitionId) {
+        // Set current date
+        dateField.valueAsDate = new Date();
+        
+        // Show modal
+        petitionModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        
+        // You can use petitionId to load specific petition data if needed
+        console.log('Opening modal for petition:', petitionId);
+    }
+
+    function closeModal() {
+        petitionModal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+        kenyanPetitionsForm.reset();
+    }
+
+    function closeSuccessMessage() {
+        successMessage.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    async function submitToGoogleSheet(e) {
+        e.preventDefault();
+        
+        const submitBtn = e.target.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
+
+        try {
+            const formData = new FormData(kenyanPetitionsForm);
+            const data = {
+                fullName: formData.get('fullName'),
+                phone: formData.get('phone'),
+                county: formData.get('county'),
+                constituency: formData.get('constituency'),
+                ward: formData.get('ward'),
+                declaration: formData.get('declaration'),
+                signature: formData.get('signature'),
+                date: formData.get('date'),
+                timestamp: new Date().toISOString()
+            };
+
+            const response = await fetch(scriptURL, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (!response.ok) throw new Error('Network response was not ok');
+
+            closeModal();
+            successMessage.classList.remove('hidden');
+        } catch (error) {
+            console.error('Error:', error);
+            alert('There was an error submitting your signature. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Submit Signature';
+        }
+    }
+
+    // Close modals when clicking outside
+    window.addEventListener('click', function(event) {
+        if (event.target === petitionModal) closeModal();
+        if (event.target === successMessage) closeSuccessMessage();
+    });
 });
