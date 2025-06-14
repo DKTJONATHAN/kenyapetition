@@ -4,14 +4,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlZG12bHBiZWxlcWN6d2djZnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5MTU1MzAsImV4cCI6MjA2NTQ5MTUzMH0.CxaX7l1nEYRunmNXigej36DxTIzgniqlvfCFRPEwf34';
     const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // DOM Elements
+    // Cache DOM elements
     const petitionModal = document.getElementById('petitionModal');
     const successMessage = document.getElementById('successMessage');
     const kenyanPetitionsForm = document.getElementById('KenyanPetitions');
     const dateField = document.getElementById('date');
     const modalTitle = petitionModal?.querySelector('h3');
 
-    // Petition Data
+    // Petition data
     const petitions = {
         'petition1': {
             id: 'lagat-dismissal-2025',
@@ -19,133 +19,151 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Modal Handlers
+    // Initialize modal buttons - enhanced with error handling
     document.querySelectorAll('[data-petition-button], [onclick^="openModal"]').forEach(button => {
         button.addEventListener('click', function(e) {
             e.preventDefault();
-            const petitionId = this.dataset.petitionId || 
-                             this.getAttribute('onclick')?.match(/openModal\('(.+?)'\)/)?.[1];
-            if (petitionId) openModal(petitionId);
+            try {
+                const petitionId = this.dataset.petitionId || 
+                                 (this.getAttribute('onclick')?.match(/openModal\('(.+?)'\)/)?.[1]);
+                if (petitionId) openModal(petitionId);
+            } catch (error) {
+                console.error('Error opening modal:', error);
+            }
         });
     });
 
-    // Form Submission
-    kenyanPetitionsForm?.addEventListener('submit', handleFormSubmit);
+    // Form submission handler - updated for Supabase
+    if (kenyanPetitionsForm) {
+        kenyanPetitionsForm.addEventListener('submit', submitToSupabase);
+    }
 
-    // Modal Functions
+    // Modal functions - made more robust
     window.openModal = function(petitionId) {
-        if (!petitions[petitionId]) return;
-
-        modalTitle.textContent = `Sign Petition: ${petitions[petitionId].title}`;
-        kenyanPetitionsForm.dataset.petitionId = petitionId;
-
-        if (dateField) dateField.valueAsDate = new Date();
-        petitionModal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        if (!petitionModal || !petitions[petitionId]) return;
+        
+        try {
+            // Update modal title if element exists
+            if (modalTitle) {
+                modalTitle.textContent = `Sign Petition: ${petitions[petitionId].title}`;
+            }
+            
+            // Set current date if field exists
+            if (dateField) {
+                dateField.valueAsDate = new Date();
+            }
+            
+            // Store petition ID in form
+            if (kenyanPetitionsForm) {
+                kenyanPetitionsForm.dataset.petitionId = petitionId;
+            }
+            
+            // Show modal - using both class and style for maximum compatibility
+            petitionModal.classList.remove('hidden');
+            petitionModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        } catch (error) {
+            console.error('Error in openModal:', error);
+        }
     };
 
     window.closeModal = function() {
-        petitionModal?.classList.add('hidden');
+        if (!petitionModal) return;
+        petitionModal.classList.add('hidden');
+        petitionModal.style.display = 'none';
         document.body.style.overflow = 'auto';
-        kenyanPetitionsForm?.reset();
+        if (kenyanPetitionsForm) {
+            kenyanPetitionsForm.reset();
+        }
     };
 
     window.closeSuccessMessage = function() {
-        successMessage?.classList.add('hidden');
+        if (!successMessage) return;
+        successMessage.classList.add('hidden');
+        successMessage.style.display = 'none';
         document.body.style.overflow = 'auto';
     };
 
-    // Main Submission Handler
-    async function handleFormSubmit(e) {
+    // Updated submission function for Supabase
+    async function submitToSupabase(e) {
         e.preventDefault();
+        e.stopPropagation();
+
         const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
+        if (!submitBtn) return;
+        
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
 
         try {
-            // Set loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
-
             // Get form data
-            const petitionId = kenyanPetitionsForm.dataset.petitionId;
+            const petitionId = kenyanPetitionsForm?.dataset.petitionId;
             const formData = {
                 petition_id: petitionId,
-                petition_title: petitions[petitionId].title,
-                full_name: getInputValue('fullName'),
-                phone: getInputValue('phone'),
-                county: getInputValue('county'),
-                constituency: getInputValue('constituency'),
-                ward: getInputValue('ward'),
-                declaration: getInputValue('declaration'),
-                signature: getInputValue('signature'),
-                date: getInputValue('date'),
-                consent: document.querySelector('[name="consent"]').checked,
-                ip_address: await getIPAddress()
+                petition_title: petitions[petitionId]?.title || '',
+                full_name: kenyanPetitionsForm.querySelector('[name="fullName"]')?.value.trim() || '',
+                phone: kenyanPetitionsForm.querySelector('[name="phone"]')?.value.trim() || '',
+                county: kenyanPetitionsForm.querySelector('[name="county"]')?.value || '',
+                constituency: kenyanPetitionsForm.querySelector('[name="constituency"]')?.value.trim() || '',
+                ward: kenyanPetitionsForm.querySelector('[name="ward"]')?.value.trim() || '',
+                declaration: kenyanPetitionsForm.querySelector('[name="declaration"]')?.value.trim() || '',
+                signature: kenyanPetitionsForm.querySelector('[name="signature"]')?.value.trim() || '',
+                date: kenyanPetitionsForm.querySelector('[name="date"]')?.value || '',
+                consent: kenyanPetitionsForm.querySelector('[name="consent"]')?.checked || false,
+                timestamp: new Date().toISOString()
             };
 
-            // Validate
-            validateForm(formData);
+            // Basic validation
+            if (!formData.full_name || formData.full_name.length < 3) {
+                throw new Error('Full name must be at least 3 characters');
+            }
+            if (!/^(?:254|\+254|0)?(7\d{8})$/.test(formData.phone)) {
+                throw new Error('Please enter a valid Kenyan phone number');
+            }
 
             // Submit to Supabase
-            const { error } = await supabase
+            const { data, error } = await supabase
                 .from('petition_signatures')
                 .insert([formData]);
 
             if (error) throw error;
 
-            // Success
-            showSuccess();
+            // Show success
+            closeModal();
+            if (successMessage) {
+                successMessage.classList.remove('hidden');
+                successMessage.style.display = 'flex';
+                setTimeout(() => closeSuccessMessage(), 5000);
+            }
+            
+            // Reset form
+            if (kenyanPetitionsForm) kenyanPetitionsForm.reset();
 
         } catch (error) {
-            console.error("Submission error:", error);
-            alert(`Error: ${error.message}`);
+            console.error('Submission error:', error);
+            alert('There was an error submitting your signature: ' + error.message);
         } finally {
             submitBtn.disabled = false;
-            submitBtn.innerHTML = originalText;
+            submitBtn.innerHTML = originalBtnText;
         }
     }
 
-    // Helper Functions
-    function getInputValue(name) {
-        return kenyanPetitionsForm.querySelector(`[name="${name}"]`).value.trim();
-    }
-
-    function validateForm(data) {
-        const errors = [];
-
-        if (!data.full_name || data.full_name.length < 3) {
-            errors.push("Full name must be at least 3 characters");
-        }
-
-        if (!/^(?:254|\+254|0)?(7\d{8})$/.test(data.phone)) {
-            errors.push("Invalid Kenyan phone number");
-        }
-
-        if (data.signature !== data.full_name) {
-            errors.push("Signature must match full name");
-        }
-
-        if (errors.length > 0) throw new Error(errors.join("\n"));
-    }
-
-    function showSuccess() {
-        closeModal();
-        successMessage.classList.remove('hidden');
-        setTimeout(closeSuccessMessage, 5000);
-    }
-
-    async function getIPAddress() {
-        try {
-            const response = await fetch('https://api.ipify.org?format=json');
-            return (await response.json()).ip;
-        } catch {
-            return null;
-        }
-    }
-
-    // Close modals when clicking outside
+    // Close modals when clicking outside - made more robust
     window.addEventListener('click', function(event) {
-        if (event.target === petitionModal) closeModal();
-        if (event.target === successMessage) closeSuccessMessage();
+        try {
+            if (event.target === petitionModal) closeModal();
+            if (event.target === successMessage) closeSuccessMessage();
+        } catch (error) {
+            console.error('Error handling click:', error);
+        }
     });
+
+    // Add temporary debug function
+    window.debugModal = function() {
+        console.log('Modal element:', petitionModal);
+        console.log('Form element:', kenyanPetitionsForm);
+        console.log('Current petitions:', petitions);
+        openModal('petition1');
+    };
 });
