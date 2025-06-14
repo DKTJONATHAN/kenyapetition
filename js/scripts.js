@@ -1,94 +1,67 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize Supabase
-    const supabase = supabase.createClient(
-        'https://hedmvlpbeleqczwgcfqb.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlZG12bHBiZWxlcWN6d2djZnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5MTU1MzAsImV4cCI6MjA2NTQ5MTUzMH0.CxaX7l1nEYRunmNXigej36DxTIzgniqlvfCFRPEwf34'
-    );
+    // Initialize Supabase 
+    const supabaseUrl = 'https://hedmvlpbeleqczwgcfqb.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlZG12bHBiZWxlcWN6d2djZnFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDk5MTU1MzAsImV4cCI6MjA2NTQ5MTUzMH0.CxaX7l1nEYRunmNXigej36DxTIzgniqlvfCFRPEwf34';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-    // DOM elements
+    // DOM Elements
     const petitionModal = document.getElementById('petitionModal');
     const successMessage = document.getElementById('successMessage');
     const kenyanPetitionsForm = document.getElementById('KenyanPetitions');
     const dateField = document.getElementById('date');
-    const modalTitle = petitionModal.querySelector('h3');
+    const modalTitle = petitionModal?.querySelector('h3');
 
-    // Petition data
+    // Petition Data (Add more as needed)
     const petitions = {
         'petition1': {
             id: 'lagat-dismissal-2025',
             title: "Dismissal of DIG Eliud Lagat"
         }
-        // Add more petitions as needed
     };
 
-    // Modal buttons
+    // Modal Handlers
     document.querySelectorAll('[data-petition-button], [onclick^="openModal"]').forEach(button => {
         button.addEventListener('click', function() {
             const petitionId = this.dataset.petitionId || 
-                             (this.getAttribute('onclick')?.match(/openModal\('(.+?)'\)/)?.[1]);
-            openModal(petitionId);
+                             this.getAttribute('onclick')?.match(/openModal\('(.+?)'\)/)?.[1];
+            if (petitionId) openModal(petitionId);
         });
     });
 
-    // Form submission
-    if (kenyanPetitionsForm) {
-        kenyanPetitionsForm.addEventListener('submit', submitToSupabase);
-    }
+    // Form Submission
+    kenyanPetitionsForm?.addEventListener('submit', handleFormSubmit);
 
-    // Modal functions
+    // Modal Functions
     window.openModal = function(petitionId) {
-        if (petitions[petitionId]) {
-            modalTitle.textContent = `Sign Petition: ${petitions[petitionId].title}`;
-            kenyanPetitionsForm.dataset.petitionId = petitionId;
-            
-            if (dateField) {
-                dateField.valueAsDate = new Date();
-            }
-            petitionModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+        if (!petitions[petitionId]) return;
+        
+        modalTitle.textContent = `Sign Petition: ${petitions[petitionId].title}`;
+        kenyanPetitionsForm.dataset.petitionId = petitionId;
+        
+        if (dateField) dateField.valueAsDate = new Date();
+        petitionModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
     };
 
     window.closeModal = function() {
-        petitionModal.classList.add('hidden');
+        petitionModal?.classList.add('hidden');
         document.body.style.overflow = 'auto';
-        if (kenyanPetitionsForm) kenyanPetitionsForm.reset();
+        kenyanPetitionsForm?.reset();
     };
 
     window.closeSuccessMessage = function() {
-        successMessage.classList.add('hidden');
+        successMessage?.classList.add('hidden');
         document.body.style.overflow = 'auto';
     };
 
-    // Form validation
-    function validateForm(data) {
-        const errors = [];
-        
-        // Name validation
-        if (data.full_name.length < 3) {
-            errors.push("Full name must be at least 3 characters");
-        }
-        
-        // Phone validation
-        if (!/^(?:254|\+254|0)?(7\d{8})$/.test(data.phone)) {
-            errors.push("Please enter a valid Kenyan phone number");
-        }
-        
-        // Signature validation
-        if (data.signature !== data.full_name) {
-            errors.push("Signature must match your full name");
-        }
-        
-        return errors;
-    }
-
-    // Submission handler
-    async function submitToSupabase(e) {
+    // Main Submission Handler
+    async function handleFormSubmit(e) {
         e.preventDefault();
         const submitBtn = e.target.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         
         try {
+            // Set loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Submitting...';
 
@@ -97,23 +70,22 @@ document.addEventListener('DOMContentLoaded', function() {
             const formData = {
                 petition_id: petitionId,
                 petition_title: petitions[petitionId].title,
-                full_name: kenyanPetitionsForm.querySelector('[name="fullName"]').value.trim(),
-                phone: kenyanPetitionsForm.querySelector('[name="phone"]').value.trim(),
-                county: kenyanPetitionsForm.querySelector('[name="county"]').value,
-                constituency: kenyanPetitionsForm.querySelector('[name="constituency"]').value.trim(),
-                ward: kenyanPetitionsForm.querySelector('[name="ward"]').value.trim(),
-                declaration: kenyanPetitionsForm.querySelector('[name="declaration"]').value.trim(),
-                signature: kenyanPetitionsForm.querySelector('[name="signature"]').value.trim(),
-                date: kenyanPetitionsForm.querySelector('[name="date"]').value,
-                consent: kenyanPetitionsForm.querySelector('[name="consent"]').checked,
+                full_name: getInputValue('fullName'),
+                phone: getInputValue('phone'),
+                county: getInputValue('county'),
+                constituency: getInputValue('constituency'),
+                ward: getInputValue('ward'),
+                declaration: getInputValue('declaration'),
+                signature: getInputValue('signature'),
+                date: getInputValue('date'),
+                consent: document.querySelector('[name="consent"]').checked,
                 ip_address: await getIPAddress()
             };
 
             // Validate
-            const errors = validateForm(formData);
-            if (errors.length > 0) throw new Error(errors.join("\n"));
+            validateForm(formData);
 
-            // Submit
+            // Submit to Supabase
             const { error } = await supabase
                 .from('petition_signatures')
                 .insert([formData]);
@@ -121,9 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (error) throw error;
 
             // Success
-            closeModal();
-            successMessage.classList.remove('hidden');
-            setTimeout(closeSuccessMessage, 5000);
+            showSuccess();
 
         } catch (error) {
             console.error("Submission error:", error);
@@ -134,12 +104,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Get IP address (optional)
+    // Helper Functions
+    function getInputValue(name) {
+        return kenyanPetitionsForm.querySelector(`[name="${name}"]`).value.trim();
+    }
+
+    function validateForm(data) {
+        const errors = [];
+        
+        if (!data.full_name || data.full_name.length < 3) {
+            errors.push("Full name must be at least 3 characters");
+        }
+        
+        if (!/^(?:254|\+254|0)?(7\d{8})$/.test(data.phone)) {
+            errors.push("Invalid Kenyan phone number");
+        }
+        
+        if (data.signature !== data.full_name) {
+            errors.push("Signature must match full name");
+        }
+        
+        if (errors.length > 0) throw new Error(errors.join("\n"));
+    }
+
+    function showSuccess() {
+        closeModal();
+        successMessage.classList.remove('hidden');
+        setTimeout(closeSuccessMessage, 5000);
+    }
+
     async function getIPAddress() {
         try {
             const response = await fetch('https://api.ipify.org?format=json');
-            const data = await response.json();
-            return data.ip;
+            return (await response.json()).ip;
         } catch {
             return null;
         }
