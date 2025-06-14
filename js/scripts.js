@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dateField = document.getElementById('date');
     const modalTitle = petitionModal?.querySelector('h3');
 
-    // Petition Data (Add more as needed)
+    // Petition Data
     const petitions = {
         'petition1': {
             id: 'lagat-dismissal-2025',
@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Modal Handlers
     document.querySelectorAll('[data-petition-button], [onclick^="openModal"]').forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
             const petitionId = this.dataset.petitionId || 
                              this.getAttribute('onclick')?.match(/openModal\('(.+?)'\)/)?.[1];
             if (petitionId) openModal(petitionId);
@@ -34,10 +35,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Modal Functions
     window.openModal = function(petitionId) {
         if (!petitions[petitionId]) return;
-        
+
         modalTitle.textContent = `Sign Petition: ${petitions[petitionId].title}`;
         kenyanPetitionsForm.dataset.petitionId = petitionId;
-        
+
         if (dateField) dateField.valueAsDate = new Date();
         petitionModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         const submitBtn = e.target.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
-        
+
         try {
             // Set loading state
             submitBtn.disabled = true;
@@ -111,19 +112,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validateForm(data) {
         const errors = [];
-        
+
         if (!data.full_name || data.full_name.length < 3) {
             errors.push("Full name must be at least 3 characters");
         }
-        
+
         if (!/^(?:254|\+254|0)?(7\d{8})$/.test(data.phone)) {
             errors.push("Invalid Kenyan phone number");
         }
-        
+
         if (data.signature !== data.full_name) {
             errors.push("Signature must match full name");
         }
-        
+
         if (errors.length > 0) throw new Error(errors.join("\n"));
     }
 
